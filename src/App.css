@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+}
+.center {
+    width: 100%;
+    max-width: 720px;
+    padding: 0 10px;
+    margin: auto;
+}
+.card {
+    border: 1px solid #cecece;
+    border-radius: 10px;
+}
+.btn-default {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    background: linear-gradient(to top, #00b7ff, #3adbec);
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+body {
+    width: 100%;
+}
+.body-content {
+    margin-top: 15px;
+    padding: 10px;
+    min-height: 400px;
+}

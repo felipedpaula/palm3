@@ -1,0 +1,13 @@
+.area-menu-home {
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.area-menu-home .btn-default {
+    width: 100%;
+    height: 45px;
+    font-weight: 600;
+}
