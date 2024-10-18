@@ -1,47 +1,112 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
-import { Link } from 'react-router-dom';
+import Jogo from '../../../models/Jogo';
+import { addJogo } from '../../../db/db';
 import './NovoAmistoso.css'; 
 
-
 const NovoAmistoso = () => {
-  return (
-    <>
-        <Header/>
+    const [nomeSessao, setNomeSessao] = useState('');
+    const [jogadoresPorTime, setJogadoresPorTime] = useState('');
+    const [tempoDeJogo, setTempoDeJogo] = useState('');
+    const [pontosParaAcabar, setPontosParaAcabar] = useState('');
+
+    const navigate = useNavigate();
+
+    const handleAvancar = async () => {
+        // Verificação dos campos vazios
+        if (!nomeSessao || !jogadoresPorTime || !tempoDeJogo || !pontosParaAcabar) {
+            alert('Por favor, preencha todos os campos antes de avançar.');
+            return;
+        }
+      
+        try {
+            const novoJogo = new Jogo(nomeSessao, 'futebol', parseInt(jogadoresPorTime), parseInt(tempoDeJogo), parseInt(pontosParaAcabar));
+            
+            // Salvar no IndexedDB
+            await addJogo(novoJogo);
         
-        <body>
-            <div className='center'>
-                <div className='body-content card'>
-                   <strong># Novo Amistoso</strong>
-                   <div className="area-novo-jogo">
+            // Redireciona para a próxima página
+            navigate('/novo-amistoso/incluir-jogadores');
+        } catch (error) {
+            console.error('Erro ao salvar os dados:', error);
+            alert('Ocorreu um erro ao salvar os dados. Tente novamente.');
+        }
+    };
 
-                        <label className="label-app" for="nome-sessao">| Nome da sessão:</label>
-                        <div className="input-area">
-                            <input className="input-app" type="text" name="nome-sessao" id="nome-sessao"/>
+    return (
+        <>
+            <Header/>
+            
+            <body>
+                <div className='center'>
+                    <div className='body-content card'>
+                        <div className='topo-page'>
+                            <strong># Novo Amistoso</strong>                        
                         </div>
+                        <div className="area-novo-jogo">
+
+                            <label className="label-app" for="nome-sessao">| Nome da sessão:</label>
+                            <div className="input-area">
+                            <input
+                                className="input-app"
+                                type="text"
+                                name="nome-sessao"
+                                id="nome-sessao"
+                                value={nomeSessao}
+                                onChange={(e) => setNomeSessao(e.target.value)}
+                            />
+                            </div>
+                                
+                            <label className="label-app" for="nome-sessao">| Número de jogadores por time: <small>(não conta goleiro)</small></label>
+                            <div className="input-area">
+                                <input
+                                    className="input-app"
+                                    type="number"
+                                    name="jogadores-por-time"
+                                    id="jogadores-por-time"
+                                    value={jogadoresPorTime}
+                                    onChange={(e) => setJogadoresPorTime(e.target.value)}
+                                />
+                            </div>
+
+                            <label className="label-app" for="tempo-jogo">| Tempo de jogo: <small>(em minutos)</small></label>
+                            <div className="input-area">
+                                <input
+                                    className="input-app"
+                                    type="number"
+                                    name="tempo-jogo"
+                                    id="tempo-jogo"
+                                    value={tempoDeJogo}
+                                    onChange={(e) => setTempoDeJogo(e.target.value)}
+                                />
+                            </div>
+
+                            <label className="label-app" for="pontos-fim">| Pontos para acabar:</label>
+                            <div className="input-area">
+                                <input
+                                    className="input-app"
+                                    type="number"
+                                    name="pontos-fim"
+                                    id="pontos-fim"
+                                    value={pontosParaAcabar}
+                                    onChange={(e) => setPontosParaAcabar(e.target.value)}
+                                />
+                            </div>
                             
-                        <label className="label-app" for="nome-sessao">| Número de jogadores por time: <small>(não conta goleiro)</small></label>
-                        <div className="input-area">
-                            <input className="input-app" type="number" name="jogadores-por-time" id="jogadores-por-time"/>
+                            <button
+                                id="novo-jogo"
+                                className="btn-default"
+                                onClick={handleAvancar}
+                            >
+                                AVANÇAR
+                            </button>
                         </div>
-
-                        <label className="label-app" for="tempo-jogo">| Tempo de jogo: <small>(em minutos)</small></label>
-                        <div className="input-area">
-                            <input className="input-app" type="number" name="tempo-jogo" id="tempo-jogo"/>
-                        </div>
-
-                        <label className="label-app" for="pontos-fim">| Pontos para acabar:</label>
-                        <div className="input-area">
-                            <input className="input-app" type="number" name="pontos-fim" id="pontos-fim"/>
-                        </div>
-                          
-                        <div id="novo-jogo" className="btn-default" href="">AVANÇAR</div>
                     </div>
                 </div>
-            </div>
-        </body>
-    </>
-  );
+            </body>
+        </>
+    );
 };
 
 export default NovoAmistoso;
