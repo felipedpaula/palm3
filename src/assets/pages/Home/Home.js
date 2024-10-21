@@ -9,7 +9,7 @@ const Home = () => {
     <>
         <Header/>
         
-        <body>
+        <div className='body'>
             <div className='center'>
                 <div className='body-content card'>
                     <div className='area-menu-home'>
@@ -17,7 +17,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-        </body>
+        </div>
     </>
   );
 };

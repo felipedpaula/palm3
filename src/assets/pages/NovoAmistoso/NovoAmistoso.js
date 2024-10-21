@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
 import Jogo from '../../../models/Jogo';
-import { addJogo } from '../../../db/db';
+import { addJogo, getDadosJogo } from '../../../db/db';
 import './NovoAmistoso.css'; 
 
 const NovoAmistoso = () => {
@@ -10,6 +10,24 @@ const NovoAmistoso = () => {
     const [jogadoresPorTime, setJogadoresPorTime] = useState('');
     const [tempoDeJogo, setTempoDeJogo] = useState('');
     const [pontosParaAcabar, setPontosParaAcabar] = useState('');
+    
+    useEffect(() => {
+        const fetchJogo = async () => {
+          try {
+            const jogo = await getDadosJogo(); // Supondo que você tenha um ID fixo para o jogo
+            if (jogo) {
+              setNomeSessao(jogo[jogo.length - 1].nome);
+              setJogadoresPorTime(jogo[jogo.length - 1].jogadoresPorTime);
+              setTempoDeJogo(jogo[jogo.length - 1].tempoDeJogo);
+              setPontosParaAcabar(jogo[jogo.length - 1].pontosParaAcabar);
+            }
+          } catch (error) {
+            console.error('Erro ao carregar o jogo:', error);
+          }
+        };
+      
+        fetchJogo();
+    }, []);
 
     const navigate = useNavigate();
 
@@ -38,7 +56,7 @@ const NovoAmistoso = () => {
         <>
             <Header/>
             
-            <body>
+            <div className='body'>
                 <div className='center'>
                     <div className='body-content card'>
                         <div className='topo-page'>
@@ -46,7 +64,7 @@ const NovoAmistoso = () => {
                         </div>
                         <div className="area-novo-jogo">
 
-                            <label className="label-app" for="nome-sessao">| Nome da sessão:</label>
+                            <label className="label-app" htmlFor="nome-sessao">| Nome da sessão:</label>
                             <div className="input-area">
                             <input
                                 className="input-app"
@@ -58,7 +76,7 @@ const NovoAmistoso = () => {
                             />
                             </div>
                                 
-                            <label className="label-app" for="nome-sessao">| Número de jogadores por time: <small>(não conta goleiro)</small></label>
+                            <label className="label-app" htmlFor="nome-sessao">| Número de jogadores por time: <small>(não conta goleiro)</small></label>
                             <div className="input-area">
                                 <input
                                     className="input-app"
@@ -70,7 +88,7 @@ const NovoAmistoso = () => {
                                 />
                             </div>
 
-                            <label className="label-app" for="tempo-jogo">| Tempo de jogo: <small>(em minutos)</small></label>
+                            <label className="label-app" htmlFor="tempo-jogo">| Tempo de jogo: <small>(em minutos)</small></label>
                             <div className="input-area">
                                 <input
                                     className="input-app"
@@ -82,7 +100,7 @@ const NovoAmistoso = () => {
                                 />
                             </div>
 
-                            <label className="label-app" for="pontos-fim">| Pontos para acabar:</label>
+                            <label className="label-app" htmlFor="pontos-fim">| Pontos para acabar:</label>
                             <div className="input-area">
                                 <input
                                     className="input-app"
@@ -104,7 +122,7 @@ const NovoAmistoso = () => {
                         </div>
                     </div>
                 </div>
-            </body>
+            </div>
         </>
     );
 };
