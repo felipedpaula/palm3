@@ -1,0 +1,76 @@
+.ordem-jogador {
+    min-width: 30px;
+}
+.area-pre-times {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.pre-time-1,
+.pre-time-2 {
+    width: 49%;
+}
+.lista-pre-jogadores {
+    border-bottom: 1px solid #CCC;
+    background-color: #FFF;
+    border: 1px solid #909090;
+    margin-top: 5px;
+}
+.pre-jogador-item {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border-bottom: 1px solid #909090;
+}
+.area-pre-reservas {
+    width: 100%;
+}
+.lista-pre-reservas {
+    width: 100%;
+    border: 1px solid #909090;
+    margin: 5px 0 20px 0;
+}
+.item-pre-reserva {
+    background-color: #FFF;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}
+.area-ordenacao {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0 20px 0;
+}
+#ordem-chegada,
+#ordem-aleatoria {
+    width: 49%;
+    height: 40px;
+    background: linear-gradient(to top, #00b7ff, #3adbec);
+    border: none;
+    color: #FFF;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.btn-app {
+    cursor: pointer;
+    width: 100%;
+    background: linear-gradient(to top, #00b7ff, #3adbec);
+    height: 60px;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 800;
+    border-radius: 12px;
+    margin: auto;
+    border: 0;
+}

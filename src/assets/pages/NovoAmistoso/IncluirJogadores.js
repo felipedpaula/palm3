@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from '../../components/Header/Header';
-import './IncluirJogadores.css'; 
 import { getDadosJogo, addJogador, getJogadores, removeJogador  } from '../../../db/db';
+import { useNavigate } from 'react-router-dom';
+import './IncluirJogadores.css'; 
 
 
 const IncluirJogadores = () => {
@@ -60,6 +61,16 @@ const IncluirJogadores = () => {
         setJogadores(jogadores.filter(jogador => jogador.id !== id)); // Atualiza a lista localmente
     };
 
+    // Função para avançar para a próxima página (PreJogo)
+    const navigate = useNavigate();
+    const handleAvancar = () => {
+        if (jogadores.length < 2) { // Verificar se há jogadores suficientes antes de avançar
+            alert('Você deve adicionar pelo menos 2 jogadores para continuar.');
+            return;
+        }
+        navigate('/novo-amistoso/pre-jogo');
+    };
+
     return (
         <>
             <Header/>
@@ -94,12 +105,11 @@ const IncluirJogadores = () => {
                                     <button className="remove-jogador" onClick={() => handleRemoveJogador(jogador.id)}>-</button>
                                 </div>
                                 ))}
-
                             </div>
                             <button
                                 id="novo-jogo"
                                 className="btn-default"
-                                // onClick={handleAvancar}
+                                onClick={handleAvancar}
                             >
                                 AVANÇAR
                             </button>
