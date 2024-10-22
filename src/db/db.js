@@ -54,6 +54,15 @@ export async function getJogadores() {
     return db.getAll('jogadores'); // Busca do store "jogadores"
 }
 
+export async function getJogadoresTime1() {
+    const db = await initDB();
+    return db.getAll('time1');
+}
+export async function getJogadoresTime2() {
+    const db = await initDB();
+    return db.getAll('time2');
+}
+
 export async function removeJogador(id) {
     const db = await initDB();
     return db.delete('jogadores', id); // Remove do store "jogadores"

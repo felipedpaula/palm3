@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Header } from '../../components/Header/Header';
-import './JogoEmAndamento.css'; 
+import Cronometro from '../../components/Cronometro/Cronometro';
 import { getDadosJogo, getJogadores } from '../../../db/db';
+import './JogoEmAndamento.css'; 
+import TimesEmCampo from '../../components/TimesEmCampo/TimesEmCampo';
 
 const JogoEmAndamento = () => {
 
@@ -43,33 +45,8 @@ const JogoEmAndamento = () => {
                         </div>
 
                         <div className="area-jogo">
-                            <div className="topo-jogo">
-                                <div className="status-jogo">
-                                    <label className="label-app">| Status JOGO:</label>
-                                    <div className="sinal parado">
-                                        Pausado
-                                    </div>
-                                </div>
-                                <div class="tempo-jogo">
-                                    <label class="label-app">| TEMPO:</label>
-                                    <div class="timer-jogo">
-                                        <div class="controles-jogo">
-                                            <div class="btn-controll play">
-                                                <img width="25px" src="/images/play.png" alt="Play"/>
-                                            </div>
-                                            <div class="btn-controll pause">
-                                                <img width="25px" src="/images/pause.png" alt="Pause"/>
-                                            </div>
-                                            <div class="btn-controll stop">
-                                                <img width="25px" src="/images/stop.png" alt="Stop"/>
-                                            </div>
-                                        </div>
-                                        <div class="cronometro">
-                                            <span class="tempo-restante"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <Cronometro/>
+                            <TimesEmCampo/>
                         </div>
                     </div>
                 </div>

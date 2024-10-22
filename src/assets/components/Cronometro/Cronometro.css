@@ -1,0 +1,56 @@
+.topo-jogo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.status-jogo {
+    width: 45%;
+}
+.tempo-jogo {
+    width: 45%;
+}
+.sinal {
+    margin-top: 10px;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    font-weight: 600;
+    border-radius: 6px;
+}
+.em-andamento {
+    background-color: #38C93E;
+}
+.parado {
+    background-color: #909090;
+}
+.fim-de-jogo {
+    background-color: #ac0000;
+}
+.timer-jogo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    background-color: #FFF;
+    border: 1px solid #909090;
+    border-radius: 6px;
+    height: 40px;
+    padding: 0 6px;
+}
+.controles-jogo {
+    height: 100%;
+    gap: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cronometro {
+    font-weight: 600;
+}
+.btn-controll {
+    cursor: pointer;
+}

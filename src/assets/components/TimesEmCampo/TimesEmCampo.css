@@ -1,0 +1,62 @@
+.topo-times {
+    margin: 20px 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.versus {
+    font-size: 24px;
+    font-weight: 800;
+}
+.topo-time-1,
+.topo-time-2 {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+}
+.lista-jogadores-time-1,
+.lista-jogadores-time-2 {
+    width: 100%;
+    background-color: #FFF;
+    border: 1px solid #909090;
+}
+.jogador-time-1,
+.jogador-time-2,
+.proximo-time-jogador,
+.jogador-gol {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 35px;
+    border-bottom: 1px solid #909090;
+    padding-left: 6px;
+}
+.proximo-time-area {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.proximo-time {
+    width: 100%;
+    border: 1px solid #909090;
+    margin-top: 10px;
+    background-color: #FFF;
+}
+.gols-time-1,
+.gols-time-2 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    padding: 6px;
+    border: 1px solid #909090;
+    background-color: #FFF;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+.gols-1,
+.gols-2 {
+    font-size: 20px;
+    font-weight: 600;
+}
