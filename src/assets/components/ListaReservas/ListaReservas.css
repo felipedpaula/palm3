@@ -1,0 +1,19 @@
+.modal-content-top,
+.modal-content-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-content-body {
+    width: 100%;
+    text-align: left;
+}
+#salvar-jogador {
+    background-color: #00a50e;
+    color: #FFF;
+}
+#deletar-jogador {
+    background-color: #FF0000;
+    color: #FFF;
+}

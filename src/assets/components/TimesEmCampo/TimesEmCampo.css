@@ -28,9 +28,10 @@
     width: 100%;
     display: flex;
     align-items: center;
-    height: 35px;
+    justify-content: space-between;
+    height: 40px;
     border-bottom: 1px solid #909090;
-    padding-left: 6px;
+    padding: 0 6px;
 }
 .proximo-time-area {
     width: 100%;

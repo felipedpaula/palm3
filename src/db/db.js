@@ -128,7 +128,7 @@ export async function clearProxReservas() {
     await tx.done;
 }
 
-// Função para atualizar as reservas e reorganizar o Time 2 conforme solicitado
+// Função para atualizar as reservas e reorganizar o Time 2 caso o Time 1 vença
 export async function vitoriaTime1() {
     const db = await initDB();
 
@@ -166,26 +166,64 @@ export async function vitoriaTime1() {
     await txTime2.done;
 }
 
-// Função para atualizar o Time 2 com os primeiros jogadores da lista de proxReservas
-export async function atualizarTime2ComReservas() {
+// Função para atualizar as reservas e reorganizar o Time 1 caso o Time 2 vença
+export async function vitoriaTime2() {
+    const db = await initDB();
+
+    // Passo 1: Recupera os jogadores do Time 1 e da lista de proxReservas
+    const time1 = await db.getAll('time1');
+    const proxReservas = await db.getAll('proxReservas');
+
+    // Passo 2: Limpar o store de proxReservas para reiniciar a fila
+    const txProxReservasClear = db.transaction('proxReservas', 'readwrite');
+    const storeProxReservasClear = txProxReservasClear.objectStore('proxReservas');
+    await storeProxReservasClear.clear(); // Limpa todos os jogadores de proxReservas
+    await txProxReservasClear.done;
+
+    // Passo 3: Combinar a lista de proxReservas com time1, colocando time1 ao final
+    const novasReservas = [...proxReservas, ...time1];
+
+    // Passo 4: Reinserir os jogadores de proxReservas com IDs únicos em ordem correta
+    const txProxReservasUpdate = db.transaction('proxReservas', 'readwrite');
+    const storeProxReservasUpdate = txProxReservasUpdate.objectStore('proxReservas');
+    
+    // ID inicial para garantir que a ordem de inserção seja preservada
+    let id = 1;
+    
+    for (const jogador of novasReservas) {
+        // Vamos criar um ID incrementado para manter a ordem na fila
+        const jogadorComId = { ...jogador, id: id++ };
+        await storeProxReservasUpdate.put(jogadorComId); // Salva os jogadores na ordem correta
+    }
+    await txProxReservasUpdate.done;
+
+    // Limpa o store do Time 1 após mover os jogadores
+    const txTime1 = db.transaction('time1', 'readwrite');
+    const storeTime1 = txTime1.objectStore('time1');
+    await storeTime1.clear(); // Limpa todos os jogadores do time 1
+    await txTime1.done;
+}
+
+// Função genérica para atualizar um time com os primeiros jogadores da lista de proxReservas
+export async function atualizarTimeComReservas(nomeTime, jogadoresPorTime) {
     const db = await initDB();
 
     // Passo 1: Recuperar a lista de proximosReservas
     const proxReservas = await db.getAll('proxReservas');
-    const qtdPorTime = 3; // Defina a quantidade de jogadores por time, ou a que for apropriada
+    const qtdPorTime = jogadoresPorTime;
 
-    // Passo 2: Selecionar os primeiros jogadores da lista para o Time 2
-    const novosTime2 = proxReservas.slice(0, qtdPorTime);
+    // Passo 2: Selecionar os primeiros jogadores da lista para o Time
+    const novosJogadores = proxReservas.slice(0, qtdPorTime);
     const novasReservas = proxReservas.slice(qtdPorTime); // Remove os primeiros jogadores da lista de reservas
 
-    // Passo 3: Limpar o Time 2 e adicionar os novos jogadores
-    const txTime2 = db.transaction('time2', 'readwrite');
-    const storeTime2 = txTime2.objectStore('time2');
-    await storeTime2.clear(); // Limpa todos os jogadores do time 2
-    for (const jogador of novosTime2) {
-        await storeTime2.put(jogador); // Adiciona os novos jogadores no Time 2
+    // Passo 3: Limpar o time especificado e adicionar os novos jogadores
+    const txTime = db.transaction(nomeTime, 'readwrite');
+    const storeTime = txTime.objectStore(nomeTime);
+    await storeTime.clear(); // Limpa todos os jogadores do time especificado
+    for (const jogador of novosJogadores) {
+        await storeTime.put(jogador); // Adiciona os novos jogadores no time
     }
-    await txTime2.done;
+    await txTime.done;
 
     // Passo 4: Atualizar o proxReservas com os jogadores restantes
     const txProxReservas = db.transaction('proxReservas', 'readwrite');
@@ -202,4 +240,18 @@ export async function getJogadoresProxReservas() {
     return db.getAll('proxReservas'); // Retorna todos os jogadores da store 'proxReservas'
 }
 
+// Função para buscar o próximo ID para um novo jogador
+export async function getProximoIdJogador() {
+    const db = await initDB();
+    const jogadores = await db.getAll('jogadores');
+    return jogadores.length > 0 ? jogadores[jogadores.length - 1].id + 1 : 1;
+}
 
+// Função para adicionar jogador ao final da lista de proxReservas
+export async function addJogadorAosReservas(jogador) {
+    const db = await initDB();
+    const tx = db.transaction('proxReservas', 'readwrite');
+    const store = tx.objectStore('proxReservas');
+    await store.add(jogador); // Adiciona o jogador ao final da lista
+    await tx.done;
+}

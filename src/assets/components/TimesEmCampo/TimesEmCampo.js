@@ -2,18 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { getJogadoresTime1, getJogadoresTime2 } from '../../../db/db'; // Importar as funções corretas
 import './TimesEmCampo.css'; 
 
-const TimesEmCampo = ({ time2Atualizado }) => {
+const TimesEmCampo = ({ time1Atualizado, time2Atualizado }) => {
     const [time1, setTime1] = useState([]);
     const [time2, setTime2] = useState([]);
     const [golsTime1, setGolsTime1] = useState(0); // Estado para o placar do Time 1
     const [golsTime2, setGolsTime2] = useState(0); // Estado para o placar do Time 2
 
-    // Atualiza o time1 e time2 quando forem alterados nas props
+    // Atualiza time1 e time2 quando forem alterados nas props
+    useEffect(() => {
+        if (time1Atualizado.length > 0) {
+            setTime1(time1Atualizado);
+        }
+    }, [time1Atualizado]);
+
     useEffect(() => {
         if (time2Atualizado.length > 0) {
             setTime2(time2Atualizado);
         }
-    }, [ time2Atualizado]);
+    }, [time2Atualizado]);
 
     // Buscar os jogadores do IndexedDB (chama-se no carregamento inicial)
     useEffect(() => {
